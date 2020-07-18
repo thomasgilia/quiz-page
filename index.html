@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Quiz page</title>
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <h1>Quiz</h1>
+    <form>
+        <!-- will need to change to a1 instead of a1 because its refing the input which will be the answer...
+        so will need to put a div in so can have question as variable too? later -->
+        <!-- <label for="a1">1) What year did columbus sale the ocean blue?</label><br>
+        <input type="text" id="a1" name="a1"><br>
+        <label for="a2">2) head shoulders knees and toes ___ and ____</label><br>
+        <input type="text" id="a2" name="a2"><br>
+        <label for="a3">3) What is the better pet - cat or dog?</label><br>
+        <input type="text" id="a3" name="a3"><br> -->
+
+        <ol id="theQuiz">
+        </ol>
+        </br>
+        <button type="button" class="btn btn-danger" onclick="checkAnswers()">Check Answers</button>
+        <button type="button" class="btn btn-danger" onclick="clearAnswers()">Clear Answers</button>
+    </form>
+    <!-- <h1>List of questions</h1> -->
+    <!-- <h1>submit button and clear button</h1> -->
+    <!-- 1) What year did columbus sale the ocean blue? 1492 
+2) "head shoulders knees and toes ___ and ____" knees toes
+3) What is the better pet - cat or dog?  trick question, both 
+4) a square is a type of rectangle (true false radio button)
+5) my bossy niece has a case of the terrible ____ (twos) also accept 2s
+-->
+    <!-- ultimately want an array of objects, each object containing a questions, the correct answer, the
+user's answer and pass/fail maybe. or two separate objects one with q/a and the other with user a and pass/fail -->
+
+    <script>
+        createQuiz();
+
+        let q = "";
+        let a = "";
+
+        function createQuiz() {
+            let qaArray = [
+                {
+                    "id": 1,
+                    "q": "What year did columbus sale the ocean blue?",
+                    'a': 1492,
+                }, {
+                    "id": 2,
+                    "q": "head shoulders knees and toes ___ and ____",
+                    "a": "knees toes",
+                }, {
+                    "id": 3,
+                    "q": "What is the better pet - cat or dog?",
+                    "a               ": "  trick question, both ",
+                }, {
+                    "id": 4,
+                    "q": "a square is a type of rectangle",
+                    "a": "(true false radio button)",
+                }, {
+                    "id": 5,
+                    "q": "my bossy niece has a case of the terrible ____",
+                    "a": "(twos) also accept 2s",
+                }
+            ];
+
+            let theQuiz = document.getElementById("theQuiz");
+
+            qaArray.forEach((qaObj) => {
+                let qaListItem = `<li><label for="a${qaObj.id}"> ${qaObj.q}</label><br>
+            <input type="text" id="a${qaObj.id}" name="a${qaObj.id}"></li><br>`
+            //If want numbering to come from id: 
+            //let qaListItem = `<li><label for="a${qaObj.id}">${qaObj.id}) ${qaObj.q}</label><br>
+            // <input type="text" id="a${qaObj.id}" name="a${qaObj.id}"><br></li>`
+                theQuiz.innerHTML += qaListItem;
+            });
+        }
+        function checkAnswers() {
+
+        }
+        function clearAnswers() {
+
+        } 
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
