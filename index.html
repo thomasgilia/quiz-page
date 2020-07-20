@@ -15,9 +15,7 @@
 <body>
     <h1>Quiz</h1>
     <form>
-        <!-- will need to change to a1 instead of a1 because its refing the input which will be the answer...
-        so will need to put a div in so can have question as variable too? later -->
-        <ol id="theQuiz">
+        <ol style="list-style:none" id="theQuiz">
         </ol>
         </br>
         <button type="button" class="btn btn-danger" onclick="checkAnswers()">Check Answers</button>
@@ -26,6 +24,7 @@
     </form>
 
     <script>
+        let quiz = "2"
         let qaArray = [
             {
                 "id": 1,
@@ -47,14 +46,44 @@
                 "userCorrect": false,
             }, {
                 "id": 4,
-                "q": "a square is a type of rectangle",
+                "q": "A square is a type of rectangle",
                 "a": "(true false radio button)",
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 5,
-                "q": "my bossy niece has a case of the terrible ____",
+                "q": "My bossy niece has a case of the terrible ____",
                 "a": "twos",                    //(twos) also accept 2s",
+                "userResponse": "",
+                "userCorrect": false,
+            }, {
+                "id": 6,
+                "q": "To reduce the risk of skin cancer, always use ____",
+                "a": "sunscreen",                    //sunblock, sun block, sun screen
+                "userResponse": "",
+                "userCorrect": false,
+            }, {
+                "id": 7,
+                "q": "Nothing like a cup of hot ______ in the morning to get you going",
+                "a": "coffee",                    //tea, joe
+                "userResponse": "",
+                "userCorrect": false,
+            }, {
+                "id": 8,
+                "q": "\"My name is Inigo Montoya. You killed my father. Prepare to ___.\"",
+                "a": "die",                    //,
+                "userResponse": "",
+                "userCorrect": false,
+            }, {
+                "id": 9,
+                "q": "The earth revolves around the ___",
+                "a": "sun",                    //
+                "userResponse": "",
+                "userCorrect": false,
+            }, {
+                "id": 10,
+                "q": "What color is healthy grass?",
+                "a": "green",                    //
                 "userResponse": "",
                 "userCorrect": false,
             }
@@ -62,12 +91,21 @@
 
         function createQuiz() {
             let theQuiz = document.getElementById("theQuiz");
-
-            qaArray.forEach((qaObj) => {
-                let qaListItem = `<li><label for="userResponse${qaObj.id}"> ${qaObj.q}</label><br>
-    <input type="text" id="userResponse${qaObj.id}" name="userResponse${qaObj.id}"></li><br>`
-                theQuiz.innerHTML += qaListItem;
-            });
+            if (quiz == 1) {
+                for (i = 0; i < 5; i++) {
+                    console.log(qaArray[i].id);
+                    let qaListItem = `<li><label for="userResponse${qaArray[i].id}"> ${qaArray[i].q}</label><br>
+    <input type="text" id="userResponse${qaArray[i].id}" name="userResponse${qaArray[i].id}"></li><br>`
+                    theQuiz.innerHTML += qaListItem;
+                }
+            } else {
+                for (i = 5; i < 10; i++) {
+                    console.log(qaArray[i].id);
+                    let qaListItem = `<li><label for="userResponse${qaArray[i].id}"> ${qaArray[i].q}</label><br>
+    <input type="text" id="userResponse${qaArray[i].id}" name="userResponse${qaArray[i].id}"></li><br>`
+                    theQuiz.innerHTML += qaListItem;
+                }
+            }
         }
         createQuiz();
 
@@ -88,9 +126,19 @@
 
         function clearAnswers() {
             let theQuiz = document.getElementById("theQuiz");
+            let currentQuiz = theQuiz
             theQuiz.innerHTML = "";
             createQuiz();
-        } 
+        }
+
+        function nextQuiz() {
+            if (quiz == 1) {
+                quiz += 1;
+            } else {
+                quiz -= 1;
+            }
+            clearAnswers();
+        }
 
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
