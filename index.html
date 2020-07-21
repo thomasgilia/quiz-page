@@ -6,14 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css">
     <title>Quiz page</title>
     <style>
-        .correct {}
+        .correct {
+            color: blue;
+            font-size: 20px
+        }
+
+        .incorrect {
+            color: red
+        }
     </style>
 </head>
 
 <body>
-    <h1>Quiz</h1>
+    <h1>Super easy quiz</h1>
+    <h5>'Cause your brain's worked hard today and needs a break</h5>
     <form>
         <ol style="list-style:none" id="theQuiz">
         </ol>
@@ -29,61 +39,61 @@
             {
                 "id": 1,
                 "q": "What year did columbus sail the ocean blue?",
-                'a': 1492,
+                'a': [1492],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 2,
                 "q": "Head shoulders knees and toes, knees and ____",
-                "a": "toes",
+                "a": ["toes"],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 3,
                 "q": "What is the better pet - cat or dog?",
-                "a": "both",               // trick question, both ",
+                "a": ["both", "cat", "dog", "neither"],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 4,
                 "q": "A square is a type of rectangle",
-                "a": "(true false radio button)",
+                "a": ["true", "yes"],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 5,
                 "q": "My bossy niece has a case of the terrible ____",
-                "a": "twos",                    //(twos) also accept 2s",
+                "a": ["twos", "2s", "two's", "2's"],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 6,
                 "q": "To reduce the risk of skin cancer, always use ____",
-                "a": "sunscreen",                    //sunblock, sun block, sun screen
+                "a": ["sunscreen", "sunblock", "sun block", "sun screen"],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 7,
                 "q": "Nothing like a cup of hot ______ in the morning to get you going",
-                "a": "coffee",                    //tea, joe
+                "a": ["coffee", "joe", "tea"],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 8,
                 "q": "\"My name is Inigo Montoya. You killed my father. Prepare to ___.\"",
-                "a": "die",                    //,
+                "a": ["die"],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 9,
                 "q": "The earth revolves around the ___",
-                "a": "sun",                    //
+                "a": ["sun"],
                 "userResponse": "",
                 "userCorrect": false,
             }, {
                 "id": 10,
                 "q": "What color is healthy grass?",
-                "a": "green",                    //
+                "a": ["green"],
                 "userResponse": "",
                 "userCorrect": false,
             }
@@ -93,14 +103,12 @@
             let theQuiz = document.getElementById("theQuiz");
             if (quiz == 1) {
                 for (i = 0; i < 5; i++) {
-                    console.log(qaArray[i].id);
                     let qaListItem = `<li><label for="userResponse${qaArray[i].id}"> ${qaArray[i].q}</label><br>
     <input type="text" id="userResponse${qaArray[i].id}" name="userResponse${qaArray[i].id}"></li><br>`
                     theQuiz.innerHTML += qaListItem;
                 }
             } else {
                 for (i = 5; i < 10; i++) {
-                    console.log(qaArray[i].id);
                     let qaListItem = `<li><label for="userResponse${qaArray[i].id}"> ${qaArray[i].q}</label><br>
     <input type="text" id="userResponse${qaArray[i].id}" name="userResponse${qaArray[i].id}"></li><br>`
                     theQuiz.innerHTML += qaListItem;
@@ -110,18 +118,37 @@
         createQuiz();
 
         function checkAnswers() {
-
-            for (i = 0; i < 5; i++) {
-                let responseName = "userResponse" + (i + 1);
+            qaArray.forEach((array) => {
+                let responseName = "userResponse" + (array.id);
                 let thisResponse = document.getElementById(responseName);
+                if (thisResponse != null) {
+                    let theParent = thisResponse.parentNode;
+                    let iTag = document.createElement("i");
 
-                if (thisResponse.value != null) {
-                    qaArray[i].userResponse = thisResponse.value;       //save user's response into the array}
-                    if (qaArray[i].userResponse == qaArray[i].a) {      //check against quiz key 
-                        qaArray[i].userCorrect = true                   //change answer boolean to true if matches        
+                    array.userResponse = thisResponse.value;       //save user's response into the array}
+                    let possibleAnswers = array.a;
+                    possibleAnswers.forEach((answerArray) => {     //checking answers against all possible correct
+                        if (answerArray == array.userResponse) {
+                            array.userCorrect = true
+                        }
+                    }
+                    )
+
+                    if (array.userCorrect == true) {      //style if correct 
+                        let iTag = document.createElement("i");
+                        iTag.innerHTML = "<i id=\"iTag\" class=\"animate__animated animate__wobble fa fa-check-square-o\" aria-hidden=\"true\"></i>";
+                        theParent.insertBefore(iTag, thisResponse)
+                        thisResponse.className = "correct"
+                        iTag.className = "correct"
+                    } else {
+                        let iTag = document.createElement("i");
+                        iTag.innerHTML = "<i class=\"fa fa-times-circle-o\" aria-hidden=\"true\"></i>";
+                        theParent.insertBefore(iTag, thisResponse)
+                        thisResponse.className = "incorrect"
+                        iTag.className = "incorrect"
                     }
                 }
-            }
+            })
         }
 
         function clearAnswers() {
